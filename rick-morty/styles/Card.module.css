@@ -2,18 +2,22 @@
 .outerLayer {
     display: flex;
     flex-direction: column;
-    max-width: 14rem;
-    min-width: 14rem;
-    min-height: 16rem;
+    max-width: 15rem;
+    min-width: 15rem;
+    min-height: 18rem;
     border-style: solid;
+    margin-bottom: 0.5rem;
+
 }
 
 .title {
-    padding: 1rem;
     color: brown;
 }
 
-.info {
-    padding: 1rem;
-    color: aqua;
+/* .info {
+    padding: 0.5rem;
+} */
+
+.image {
+    margin: auto;
 }

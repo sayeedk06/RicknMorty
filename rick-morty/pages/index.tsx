@@ -17,10 +17,17 @@ export default function Home({characters}:any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
+        <input className={styles.searchBox} type="text" placeholder='Search for characters here..........'/>
         <div className={styles.flexContainer}>
-        {characters.results.map(
+        {characters.map(
                 (character:any)=>{
-                  return <Card key={character.id} name={character.name}/>
+                  return <Card 
+                  key={character.id} 
+                  name={character.name} 
+                  species={character.species}
+                  type={character.type}
+                  gender={character.gender}
+                  image={character.image}/>
                   }
                   )}
         </div>
@@ -32,13 +39,14 @@ export default function Home({characters}:any) {
 }
 
 export const getServerSideProps : GetServerSideProps =async (params:any) => {
-  const url = 'https://rickandmortyapi.com/api/character'
+  const url = 'https://rickandmortyapi.com/api/character/?page=42'
   const response = await fetch(url)
   const data = await response.json()
-  console.log(data)
+  // console.log(data)
   return {
     props : {
-      characters : data
+      characters : data.results,
+      info: data.info
     }
   }
 }
