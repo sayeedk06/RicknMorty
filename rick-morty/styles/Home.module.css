@@ -1,0 +1,7 @@
+.flexContainer{
+  display: flex;
+  border-style: double;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+}
