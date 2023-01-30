@@ -1,0 +1,21 @@
+.paginationFormat{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 3rem;
+}
+
+.page button{
+    padding: 5px 10px;
+    background-color: #F5F5F5;
+    border: none;
+}
+
+.page button:hover{
+    background-color: #5D3891;
+    color: #F5F5F5;
+}
+
+.page button:active{
+    background-color: #E8E2E2;
+}

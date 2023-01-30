@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 
 export default function Card(props:any){
-    console.log(props.image)
+    // console.log(props.image)
     return (
         <div className={styles.outerLayer}>
             <div className={styles.title}><h2>{props.name}</h2></div>
