@@ -16,7 +16,7 @@ export default function Home({characters, infos}:any) {
   const [currentPage, setCurrentPage] = useState(1)
   const router = useRouter()
 
-  const buttonHandler = (e) => router.push('/?page=' + e.target.value)
+  const buttonHandler = (e:any) => router.push('/?page=' + e.target.value)
 
   return (
     <>

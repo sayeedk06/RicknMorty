@@ -1,22 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500&display=swap');
 
 .outerLayer {
-    display: flex;
     flex-direction: column;
-    max-width: 15rem;
-    min-width: 15rem;
-    min-height: 18rem;
-    border-style: solid;
-    margin-bottom: 0.5rem;
+    max-width: 16rem;
+    min-width: 16rem;
+    min-height: 30rem;
+    max-height: 30rem;
+    border-style: none;
+    margin: 5rem;
+    padding-top: 5px;
+    border-radius: 8px;
+    background: #00425A;
+    box-shadow:  5px 5px 12px #003e55,
+             -5px -5px 12px #00465f;
 
+}
+
+.outerLayer:hover {
+    min-width: 18rem;
+    min-height: 32rem;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #003b51, #004760);
+    box-shadow:  20px 20px 100px #002633,
+                 -20px -20px 100px #005e81;
+}
+.innerLayer {
+    background: rgb(0,66,90);
+    background: linear-gradient(0deg, rgba(0,66,90,1) 0%, rgba(3,0,28,0.6895133053221288) 68%, rgba(252,115,0,0.1825105042016807) 93%, rgba(0,66,90,1) 100%);
 }
 
 .title {
-    color: brown;
+    color: #BFDB38;
+    letter-spacing: 2px;
+    font-family: 'Creepster', cursive;
 }
 
-/* .info {
-    padding: 0.5rem;
-} */
+.info {
+    color: #1F8A70;
+    font-family: 'Rajdhani', sans-serif;;
+}
+
 
 .image {
     margin: auto;
