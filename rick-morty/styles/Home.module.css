@@ -1,4 +1,7 @@
+
 .main {
+  /* background-image: url('../assets/images/rick.jpg'); */
+  background-size: contain;
   padding: 2%;
   display: block;
   margin: auto;
