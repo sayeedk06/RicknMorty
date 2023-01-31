@@ -3,23 +3,6 @@ import Styles  from '@/styles/Pagination.module.css'
 import { useEffect, useRef, useState } from "react";
 
 
-function mobilePagination(totalPages:Number[]) {
-    console.log('here')
-    return (
-        <div>
-            <select name="mobilePagination" id="mobilePagination">
-                {totalPages.map((pages:Number) => {
-                    return (<option value={String(pages)}>
-                        {String(pages)}
-                    </option>)
-                }
-                )}
-            </select>
-        </div>
-    )
-}
-
-
 export default function Pagination(props:any) {
     const [windowWidth, setWindowWidth] = useState<number | string>(0);
 
@@ -43,7 +26,7 @@ export default function Pagination(props:any) {
             <>
             <button>prev</button>
 
-            {windowWidth < 900? 
+            {windowWidth < 800? 
             <div className={Styles.mobilePagination}>
                 <select name="mobilePagination" id="mobilePagination">
                     {pageNumbers.map((pages:Number) => {

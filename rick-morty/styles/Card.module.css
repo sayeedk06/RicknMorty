@@ -7,7 +7,9 @@
     min-width: 16rem;
     min-height: 30rem;
     max-height: 30rem;
-    border-style: none;
+    border-style: solid;
+    border-width: 1rem;
+    border-color: #BFDB38;
     margin: 5rem;
     padding-top: 5px;
     border-radius: 8px;

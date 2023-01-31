@@ -49,7 +49,7 @@ export default function Home({characters, infos}:any) {
                   )}
         </div>
         <div>
-          <Pagination key={infos.count} totalPage={infos.pages} currentPage={currentPage} buttonHandler={buttonHandler}/>
+          <Pagination key={infos.count} nextPage={infos.next} prevPage={infos.prev} totalPage={infos.pages} currentPage={currentPage} buttonHandler={buttonHandler}/>
       </div>
       </main>
       
