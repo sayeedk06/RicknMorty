@@ -1,22 +1,26 @@
 import { GetServerSideProps } from "next"
 import Card from "../components/Card"
+import CardBack from "../components/CardBack"
 import Link from "next/link"
+import styles from '@/styles/DetailView.module.css'
 export default function CharacterDetail(props:any) {
     return (
-        <div>
-            {/* {characterDetails.map((detail:any) => {
-                return <h1>{detail.id}</h1>
-            })} */}
+        <div className={styles.flexContainer}>
+            <Card 
+                  key={props.id} 
+                  name={props.name} 
+                  species={props.species}
+                  type={props.type}
+                  gender={props.gender}
+                  image={props.image}/>
 
-          <p>{props.name}</p> 
-          <p>{props.species}</p>
-          <p>{props.gender}</p>
-          <p>{props.type}</p>
-          <p>{props.location.name}</p>
-          <p>{props.location.url}</p>
-          <p>{props.episode}</p>
+            <CardBack
+                location_name={props.location.name}
+                location_url={props.location.url}  
+            />
+          {/* <p>{props.episode}</p> */}
 
-          <Link href='/'>Go back</Link>
+          {/* <Link href='/'>Go back</Link> */}
         </div>
     )
 }

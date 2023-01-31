@@ -5,7 +5,8 @@ import styles from '@/styles/Home.module.css'
 import { GetServerSideProps } from 'next'
 import Card from '../components/Card'
 import Pagination from '@/components/Pagination'
-import { SyntheticEvent, useEffect, useState } from 'react'
+import Navbar from '@/components/Navbar'
+import {useState } from 'react'
 import { useRouter } from 'next/router'
 
 // const inter = Inter({ subsets: ['latin'] })
@@ -18,7 +19,12 @@ export default function Home({characters, infos}:any) {
   const router = useRouter()
 
   const buttonHandler = (e:any) => router.push('/?page=' + e.target.value);
-  const putQuery = (e:any) => setQuery(e.target.value);
+  const putQuery = (e:any) => {
+    if (e.target.value === ''){
+      router.push('/');
+    }
+    setQuery(e.target.value);
+  }
   const searchQuery = (e:any) => {
     if (e.key ==='Enter'){
       // console.log(query)
@@ -33,7 +39,9 @@ export default function Home({characters, infos}:any) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Navbar/>
       <main className={styles.main}>
+        
         <input className={styles.searchBox} type="text" onChange={putQuery} onKeyDown={searchQuery} placeholder='Search for characters here..........'/>
         <div className={styles.flexContainer}>
         {characters.map(
