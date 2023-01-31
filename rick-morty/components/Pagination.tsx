@@ -28,7 +28,7 @@ export default function Pagination(props:any) {
 
             {windowWidth < 800? 
             <div className={Styles.mobilePagination}>
-                <select name="mobilePagination" id="mobilePagination">
+                <select onChange={props.buttonHandler} name="mobilePagination" id="mobilePagination">
                     {pageNumbers.map((pages:Number) => {
                         return (<option value={String(pages)}>
                                 {String(pages)}
