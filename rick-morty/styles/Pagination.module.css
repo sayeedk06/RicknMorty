@@ -19,3 +19,8 @@
 .page button:active{
     background-color: #E8E2E2;
 }
+
+.mobilePagination select{
+    font-size: large;
+    padding: 0.2rem 2rem;
+}

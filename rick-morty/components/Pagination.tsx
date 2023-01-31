@@ -39,26 +39,12 @@ export default function Pagination(props:any) {
     }
     console.log(windowWidth);
 
-
-    // if (windowWidth < 800){
-    //     return (
-    //     <div>
-    //         <select name="mobilePagination" id="mobilePagination">
-    //             {pageNumbers.map((pages:Number) => {
-    //                 return (<option value={String(pages)}>
-    //                     {String(pages)}
-    //                 </option>)
-    //             }
-    //             )}
-    //         </select>
-    //     </div>
-    // )
-
-    // }else {
         return (
             <>
+            <button>prev</button>
+
             {windowWidth < 900? 
-            <div>
+            <div className={Styles.mobilePagination}>
                 <select name="mobilePagination" id="mobilePagination">
                     {pageNumbers.map((pages:Number) => {
                         return (<option value={String(pages)}>
@@ -70,14 +56,14 @@ export default function Pagination(props:any) {
             </div>
             : 
             <div className={Styles.paginationFormat}>
-                <button>prev</button>
                 {pageNumbers.map((pageNumber) => {
                 return (<div className={Styles.page}><button onClick={props.buttonHandler} value={pageNumber}>{pageNumber}</button></div>)
             
                 })}
-                <button>Next</button>
-                
+
             </div>}
+            
+            <button>Next</button>
             
             </>
         )
