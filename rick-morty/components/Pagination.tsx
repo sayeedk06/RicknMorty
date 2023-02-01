@@ -39,7 +39,7 @@ export default function Pagination(props:any) {
             : 
             <div className={Styles.paginationFormat}>
                 {pageNumbers.map((pageNumber) => {
-                return (<div className={Styles.page}><button onClick={props.buttonHandler} value={pageNumber}>{pageNumber}</button></div>)
+                return (<div key={pageNumber} className={Styles.page}><button onClick={props.buttonHandler} value={pageNumber}>{pageNumber}</button></div>)
             
                 })}
 
