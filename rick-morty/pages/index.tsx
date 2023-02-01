@@ -52,7 +52,7 @@ export default function Home({characters, infos}:any) {
         </div>
 
         <div>
-          <Pagination nextPage={infos.next} prevPage={infos.prev} totalPage={infos.pages} buttonHandler={buttonHandler}/>
+          <Pagination key ='1' nextPage={infos.next} prevPage={infos.prev} totalPage={infos.pages} buttonHandler={buttonHandler}/>
       </div>
 
       </main>
