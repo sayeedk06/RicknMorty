@@ -41,7 +41,7 @@ export default function Home({characters, infos}:any) {
         {characters.map(
                 (character:any)=>{
                   return <Link key={character.id} href={String(character.id)} ><Card 
-                  // key={character.id} 
+                  key={character.id} 
                   name={character.name} 
                   species={character.species}
                   type={character.type}
