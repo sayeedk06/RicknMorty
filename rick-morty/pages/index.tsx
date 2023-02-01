@@ -1,20 +1,15 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
 import { GetServerSideProps } from 'next'
 import Card from '../components/Card'
 import Pagination from '@/components/Pagination'
-import Navbar from '@/components/Navbar'
 import {useState } from 'react'
 import { useRouter } from 'next/router'
 
-// const inter = Inter({ subsets: ['latin'] })
-
-
 
 export default function Home({characters, infos}:any) {
-  const [currentPage, setCurrentPage] = useState(1)
+  // const [currentPage, setCurrentPage] = useState(1)
   const [query, setQuery] = useState('')
   const router = useRouter()
 
@@ -27,7 +22,6 @@ export default function Home({characters, infos}:any) {
   }
   const searchQuery = (e:any) => {
     if (e.key ==='Enter'){
-      // console.log(query)
       router.push('/?name=' + query);
     }}
 
@@ -39,15 +33,15 @@ export default function Home({characters, infos}:any) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar/>
       <main className={styles.main}>
         
         <input className={styles.searchBox} type="text" onChange={putQuery} onKeyDown={searchQuery} placeholder='Search for characters here..........'/>
+
         <div className={styles.flexContainer}>
         {characters.map(
                 (character:any)=>{
-                  return <Link href={String(character.id)} ><Card 
-                  key={character.id} 
+                  return <Link key={character.id} href={String(character.id)} ><Card 
+                  // key={character.id} 
                   name={character.name} 
                   species={character.species}
                   type={character.type}
@@ -56,9 +50,11 @@ export default function Home({characters, infos}:any) {
                   }
                   )}
         </div>
+
         <div>
-          <Pagination key={infos.count} nextPage={infos.next} prevPage={infos.prev} totalPage={infos.pages} currentPage={currentPage} buttonHandler={buttonHandler}/>
+          <Pagination nextPage={infos.next} prevPage={infos.prev} totalPage={infos.pages} buttonHandler={buttonHandler}/>
       </div>
+
       </main>
       
     </>
@@ -79,7 +75,18 @@ export const getServerSideProps : GetServerSideProps = async (context:any) => {
   }
   const response = await fetch(url)
   const data = await response.json()
-  console.log(data.info)
+  
+  if (data.error){
+    url = 'https://rickandmortyapi.com/api/character'
+    const response = await fetch(url)
+    const data = await response.json()
+    return {
+      props : {
+        characters : data.results,
+        infos: data.info
+      }
+    }
+  }
   return {
     props : {
       characters : data.results,

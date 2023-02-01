@@ -1,5 +1,11 @@
 .flexContainer {
     display: flex;
     text-align: center;
-    justify-content: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.episodeList {
+    padding: 2rem;
+
 }

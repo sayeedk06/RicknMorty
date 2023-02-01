@@ -13,14 +13,20 @@ export default function CharacterDetail(props:any) {
                   type={props.type}
                   gender={props.gender}
                   image={props.image}/>
+            <div className={styles.episodeList}>
+                <h3>Episode List</h3>
+                <ul>
+                {props.episode.map((url:any) => {
+                    return (<li key={url}><a href={url}>{url}</a></li>)
+                })}
+                </ul>
+            </div>
 
             <CardBack
+                key={props.id}
                 location_name={props.location.name}
                 location_url={props.location.url}  
             />
-          {/* <p>{props.episode}</p> */}
-
-          {/* <Link href='/'>Go back</Link> */}
         </div>
     )
 }
@@ -35,9 +41,6 @@ export const getServerSideProps: GetServerSideProps =  async(context) => {
     const url = 'https://rickandmortyapi.com/api/character/'
     const response = await fetch(url + context.query.id)
     const data = await response.json()
-    
-
-    console.log(data)
     return {
         props: data
     }

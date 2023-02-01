@@ -1,6 +1,5 @@
-import Link from "next/link"
 import Styles  from '@/styles/Pagination.module.css'
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 
 export default function Pagination(props:any) {
@@ -20,7 +19,7 @@ export default function Pagination(props:any) {
     for(let i = 1; i<=props.totalPage; i++){
         pageNumbers.push(i)
     }
-    console.log(windowWidth);
+    // console.log(windowWidth);
 
         return (
             <>
@@ -30,7 +29,7 @@ export default function Pagination(props:any) {
             <div className={Styles.mobilePagination}>
                 <select onChange={props.buttonHandler} name="mobilePagination" id="mobilePagination">
                     {pageNumbers.map((pages:Number) => {
-                        return (<option value={String(pages)}>
+                        return (<option key={String(pages)} value={String(pages)}>
                                 {String(pages)}
                                 </option>)
                     }
@@ -50,7 +49,5 @@ export default function Pagination(props:any) {
             
             </>
         )
-    // }
-
     
 }
