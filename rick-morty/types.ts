@@ -3,17 +3,11 @@ export interface Character {
     results: Result[];
 }
 
-// export interface CharacterDetail {
-//     key: number;
-//     name: string; 
-//     status: Status
-//     species: Species; 
-//     type: string; 
-//     gender: Gender; 
-//     image: string;
-//     location: string;
-//     location_url: string[]
-// }
+export interface CardBackprops {
+    key: number;
+    location_name: string;
+    location_url: string | string[]
+}
 
 export interface Cardprops {
     key: number; 

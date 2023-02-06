@@ -8,9 +8,9 @@ import Pagination from '@/components/Pagination'
 import {useState } from 'react'
 import { useRouter } from 'next/router'
 import { Character, Result,Info} from '@/types'
+import Error from "next/error";
 
-
-const Home:NextPage<{characters:Result[], infos:Info}  > = ({characters, infos}) => {
+const Home:NextPage<{characters:Result[], infos:Info, error:any}  > = ({characters, infos, error}) => {
   // const [currentPage, setCurrentPage] = useState(1)
   const [query, setQuery] = useState('')
   const router = useRouter()
@@ -26,6 +26,10 @@ const Home:NextPage<{characters:Result[], infos:Info}  > = ({characters, infos})
     if (e.key ==='Enter'){
       router.push('/?name=' + query);
     }}
+
+  if (error){
+    return <Error statusCode={error.statusCode} title={error.message} />;
+  }  
 
   return (
     <>
@@ -69,17 +73,28 @@ const Home:NextPage<{characters:Result[], infos:Info}  > = ({characters, infos})
 
 
 
-export const getServerSideProps : GetServerSideProps = async (context:any) => {
+export const getServerSideProps : GetServerSideProps = async (context) => {
   
   var page = context.query.page
   var url = 'https://rickandmortyapi.com/api/character/?page=' + String(page)
   
-  // console.log(context.query.page)
   if (context.query.name) {
     page = context.query.name
     url = 'https://rickandmortyapi.com/api/character/?name=' + String(page)
   }
+  
   const response = await fetch(url)
+  if (response.status === 404) {
+    console.log('error')
+    return {
+      props: {
+        error: {
+          statusCode: response.status,
+          message: response.statusText 
+      }
+    }
+}
+}
   const {results, info}:Character = await response.json()
   
   // if (data.error){
@@ -93,6 +108,8 @@ export const getServerSideProps : GetServerSideProps = async (context:any) => {
   //     }
   //   }
   // }
+  
+
   return {
     props : {
       characters : results,

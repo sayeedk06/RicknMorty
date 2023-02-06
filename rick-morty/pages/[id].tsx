@@ -2,9 +2,11 @@ import { GetServerSideProps } from "next"
 import Card from "../components/Card"
 import CardBack from "../components/CardBack"
 import styles from '@/styles/DetailView.module.css'
-export default function CharacterDetail(props:any) {
+import { Result } from "@/types"
+export default function CharacterDetail(props:Result) {
     return (
         <div className={styles.flexContainer}>
+            {/* Frontside of the card */}
             <Card 
                   key={props.id} 
                   name={props.name}
@@ -13,6 +15,8 @@ export default function CharacterDetail(props:any) {
                   type={props.type}
                   gender={props.gender}
                   image={props.image}/>
+
+            {/* url of all episodes the character are linked to */}
             <div className={styles.episodeList}>
                 <h3>Episode List</h3>
                 <ul>
@@ -22,6 +26,7 @@ export default function CharacterDetail(props:any) {
                 </ul>
             </div>
 
+            {/* backside of the card */}
             <CardBack
                 key={props.id}
                 location_name={props.location.name}
