@@ -1,14 +1,16 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import styles from '@/styles/Home.module.css'
-import { GetServerSideProps } from 'next'
+import { GetServerSideProps, NextPage } from 'next'
 import Card from '../components/Card'
 import Pagination from '@/components/Pagination'
+// import Filter from '@/components/Filter'
 import {useState } from 'react'
 import { useRouter } from 'next/router'
+import { Character, Result,Info} from '@/types'
 
 
-export default function Home({characters, infos}:any) {
+const Home:NextPage<{characters:Result[], infos:Info}  > = ({characters, infos}) => {
   // const [currentPage, setCurrentPage] = useState(1)
   const [query, setQuery] = useState('')
   const router = useRouter()
@@ -33,16 +35,19 @@ export default function Home({characters, infos}:any) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      {/* <Filter characters={characters}/> */}
       <main className={styles.main}>
         
         <input className={styles.searchBox} type="text" onChange={putQuery} onKeyDown={searchQuery} placeholder='Search for characters here..........'/>
 
+        {/* rendering card components start here */}
         <div className={styles.flexContainer}>
         {characters.map(
-                (character:any)=>{
-                  return <Link key={character.id} href={String(character.id)} ><Card 
-                  key={character.id} 
+                (character)=>{
+                  return <Link key={character.id} href={String(character.id)} ><Card
+                  key={character.id}  
                   name={character.name} 
+                  status={character.status}
                   species={character.species}
                   type={character.type}
                   gender={character.gender}
@@ -50,7 +55,8 @@ export default function Home({characters, infos}:any) {
                   }
                   )}
         </div>
-
+        {/* rendering card components end here */}
+        
         <div>
           <Pagination key ='1' nextPage={infos.next} prevPage={infos.prev} totalPage={infos.pages} buttonHandler={buttonHandler}/>
       </div>
@@ -74,24 +80,25 @@ export const getServerSideProps : GetServerSideProps = async (context:any) => {
     url = 'https://rickandmortyapi.com/api/character/?name=' + String(page)
   }
   const response = await fetch(url)
-  const data = await response.json()
+  const {results, info}:Character = await response.json()
   
-  if (data.error){
-    url = 'https://rickandmortyapi.com/api/character'
-    const response = await fetch(url)
-    const data = await response.json()
-    return {
-      props : {
-        characters : data.results,
-        infos: data.info
-      }
-    }
-  }
+  // if (data.error){
+  //   url = 'https://rickandmortyapi.com/api/character'
+  //   const response = await fetch(url)
+  //   const data = await response.json()
+  //   return {
+  //     props : {
+  //       characters : data.results,
+  //       infos: data.info
+  //     }
+  //   }
+  // }
   return {
     props : {
-      characters : data.results,
-      infos: data.info
+      characters : results,
+      infos: info
     }
   }
 }
 
+export default Home;

@@ -1,14 +1,14 @@
 import { GetServerSideProps } from "next"
 import Card from "../components/Card"
 import CardBack from "../components/CardBack"
-import Link from "next/link"
 import styles from '@/styles/DetailView.module.css'
 export default function CharacterDetail(props:any) {
     return (
         <div className={styles.flexContainer}>
             <Card 
                   key={props.id} 
-                  name={props.name} 
+                  name={props.name}
+                  status={props.status} 
                   species={props.species}
                   type={props.type}
                   gender={props.gender}
