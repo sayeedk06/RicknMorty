@@ -1,10 +1,15 @@
+export interface ErrorTypes {
+    statusCode: number,
+    message: string
+}
+
+
 export interface Character {
     info:    Info;
     results: Result[];
 }
 
 export interface CardBackprops {
-    key: number;
     location_name: string;
     location_url: string | string[]
 }

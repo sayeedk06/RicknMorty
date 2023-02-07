@@ -7,10 +7,10 @@ import Pagination from '@/components/Pagination'
 // import Filter from '@/components/Filter'
 import {useState } from 'react'
 import { useRouter } from 'next/router'
-import { Character, Result,Info} from '@/types'
+import { Character, Result,Info, ErrorTypes} from '@/types'
 import Error from "next/error";
 
-const Home:NextPage<{characters:Result[], infos:Info, error:any}  > = ({characters, infos, error}) => {
+const Home:NextPage<{characters:Result[], infos:Info, error:ErrorTypes}  > = ({characters, infos, error}) => {
   // const [currentPage, setCurrentPage] = useState(1)
   const [query, setQuery] = useState('')
   const router = useRouter()
@@ -23,7 +23,7 @@ const Home:NextPage<{characters:Result[], infos:Info, error:any}  > = ({characte
     setQuery(e.target.value);
   }
   const searchQuery = (e:any) => {
-    if (e.key ==='Enter'){
+    if (e.key ==='Enter' || e.keyCode === 13){
       router.push('/?name=' + query);
     }}
 
@@ -85,7 +85,7 @@ export const getServerSideProps : GetServerSideProps = async (context) => {
   
   const response = await fetch(url)
   if (response.status === 404) {
-    console.log('error')
+    // console.log('error')
     return {
       props: {
         error: {
