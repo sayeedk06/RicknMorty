@@ -4,27 +4,78 @@ import styles from '@/styles/Home.module.css'
 import { GetServerSideProps, NextPage } from 'next'
 import Card from '../components/Card'
 import Pagination from '@/components/Pagination'
-// import Filter from '@/components/Filter'
+import Filter from '@/components/Filter'
 import {useState } from 'react'
 import { useRouter } from 'next/router'
 import { Character, Result,Info, ErrorTypes} from '@/types'
 import Error from "next/error";
 
 const Home:NextPage<{characters:Result[], infos:Info, error:ErrorTypes}  > = ({characters, infos, error}) => {
-  // const [currentPage, setCurrentPage] = useState(1)
+  const [currentCharacter, setCharacter] = useState(characters)
+  const [currentInfo, setInfo] = useState(infos)
   const [query, setQuery] = useState('')
   const router = useRouter()
 
-  const buttonHandler = (e:any) => router.push('/?page=' + e.target.value);
+  const resetHandler = () => window.location.reload();
+
+  const statusHandler = async (e:any) => {
+    const url = 'https://rickandmortyapi.com/api/character/?status=' + e.target.value
+    const response = await fetch(url)
+    // console.log(response)
+    if (response.status === 200){
+      const {info, results} = await response.json()
+      // console.log(results)
+      setCharacter(results)
+      setInfo(info) 
+    }
+  }
+  const genderHandler = async (e:any) => {
+    const url = 'https://rickandmortyapi.com/api/character/?gender=' + e.target.value
+    const response = await fetch(url)
+    // console.log(response)
+    if (response.status === 200){
+      const {info, results} = await response.json()
+      // console.log(results)
+      setCharacter(results)
+      setInfo(info) 
+    }
+  }
+
+  // const statusHandler = (e:any) => {
+  //   if (router.query.gender){
+  //     return router.push( '/?gender=' + String(router.query.gender) + '&status=' + e.target.value) 
+  //   }
+  //   router.push('/'+ '?status=' + e.target.value);}
+
+  // const genderHandler = (e:any) => {
+  //   if (router.query.status){
+  //     return router.push('/?gender='+ e.target.value + '&status=' + String(router.query.status))
+  //   }
+  //   router.push(router.pathname + '?gender=' + e.target.value);} 
+
+
+  const buttonHandler = (e:any) => {
+    router.push(router.pathname + '?page=' + e.target.value);}
+
   const putQuery = (e:any) => {
     if (e.target.value === ''){
       router.push('/');
     }
     setQuery(e.target.value);
   }
-  const searchQuery = (e:any) => {
+
+  const searchQuery = async (e:any) => {
     if (e.key ==='Enter' || e.keyCode === 13){
-      router.push('/?name=' + query);
+      const url = 'https://rickandmortyapi.com/api/character/?name=' + e.target.value
+      const response = await fetch(url)
+      // console.log(response)
+
+      if (response.status === 200){
+        const {info, results} = await response.json()
+        // console.log(results)
+        setCharacter(results)
+        setInfo(info) 
+    }
     }}
 
   if (error){
@@ -39,14 +90,15 @@ const Home:NextPage<{characters:Result[], infos:Info, error:ErrorTypes}  > = ({c
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* <Filter characters={characters}/> */}
+
       <main className={styles.main}>
         
         <input className={styles.searchBox} type="text" onChange={putQuery} onKeyDown={searchQuery} placeholder='Search for characters here..........'/>
+        <Filter statusHandler={statusHandler} genderHandler={genderHandler} resetHandler={resetHandler}/>
 
         {/* rendering card components start here */}
         <div className={styles.flexContainer}>
-        {characters.map(
+        {currentCharacter.map(
                 (character)=>{
                   return <Link key={character.id} href={String(character.id)} ><Card
                   key={character.id}  
@@ -62,7 +114,7 @@ const Home:NextPage<{characters:Result[], infos:Info, error:ErrorTypes}  > = ({c
         {/* rendering card components end here */}
         
         <div>
-          <Pagination key ='1' nextPage={infos.next} prevPage={infos.prev} totalPage={infos.pages} buttonHandler={buttonHandler}/>
+          <Pagination key ='1' nextPage={currentInfo.next} prevPage={currentInfo.prev} totalPage={currentInfo.pages} buttonHandler={buttonHandler}/>
       </div>
 
       </main>
@@ -75,15 +127,19 @@ const Home:NextPage<{characters:Result[], infos:Info, error:ErrorTypes}  > = ({c
 
 export const getServerSideProps : GetServerSideProps = async (context) => {
   
-  var page = context.query.page
-  var url = 'https://rickandmortyapi.com/api/character/?page=' + String(page)
+  // console.log(Object.keys(context.query))
+  // const queries = Object.keys(context.query)
+  // const filters = ['gender', 'status']
+  const page = context.query.page
+  const url = 'https://rickandmortyapi.com/api/character/?page=' + String(page)
   
-  if (context.query.name) {
-    page = context.query.name
-    url = 'https://rickandmortyapi.com/api/character/?name=' + String(page)
-  }
+  // if (queries.some((value) => filters.includes(value))) {
+  //   page = context.query.name
+  //   url = 'https://rickandmortyapi.com/api/character/?name=' + String(page)
+  // }
   
   const response = await fetch(url)
+
   if (response.status === 404) {
     // console.log('error')
     return {
@@ -96,18 +152,6 @@ export const getServerSideProps : GetServerSideProps = async (context) => {
 }
 }
   const {results, info}:Character = await response.json()
-  
-  // if (data.error){
-  //   url = 'https://rickandmortyapi.com/api/character'
-  //   const response = await fetch(url)
-  //   const data = await response.json()
-  //   return {
-  //     props : {
-  //       characters : data.results,
-  //       infos: data.info
-  //     }
-  //   }
-  // }
   
 
   return {
