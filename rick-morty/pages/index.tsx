@@ -65,7 +65,7 @@ const Home:NextPage<{characters:Result[], infos:Info, error:ErrorTypes}  > = ({c
   }
 
   const searchQuery = async (e:any) => {
-    if (e.key ==='Enter' || e.keyCode === 13){
+    if (e.key ==='Enter' || e.keyCode === 13 || e.key ==='done'){
       const url = 'https://rickandmortyapi.com/api/character/?name=' + e.target.value
       const response = await fetch(url)
       // console.log(response)
