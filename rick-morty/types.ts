@@ -1,3 +1,4 @@
+
 export interface ErrorTypes {
     statusCode: number,
     message: string

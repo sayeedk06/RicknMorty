@@ -1,11 +1,11 @@
-import { GetServerSideProps } from "next"
+import { GetServerSideProps, NextPage } from "next"
 import Card from "../components/Card"
 import CardBack from "../components/CardBack"
 import styles from '@/styles/DetailView.module.css'
-import { Errors, Result } from "@/types"
+import { Character, ErrorTypes, Result } from "@/types"
 import Error from "next/error";
 
-export default function CharacterDetail(props:Result, {error}:Errors) {
+const CharacterDetail:NextPage<{characters:Result, error:ErrorTypes}> = ({characters, error}) => {
     if (error){
         return <Error statusCode={error.statusCode} title={error.message} />;
       } 
@@ -13,19 +13,19 @@ export default function CharacterDetail(props:Result, {error}:Errors) {
         <div className={styles.flexContainer}>
             {/* Frontside of the card */}
             <Card 
-                  key={props.id} 
-                  name={props.name}
-                  status={props.status} 
-                  species={props.species}
-                  type={props.type}
-                  gender={props.gender}
-                  image={props.image}/>
+                  key={characters.id} 
+                  name={characters.name}
+                  status={characters.status} 
+                  species={characters.species}
+                  type={characters.type}
+                  gender={characters.gender}
+                  image={characters.image}/>
 
             {/* url of all episodes the character are linked to */}
             <div className={styles.episodeList}>
                 <h3>Episode List</h3>
                 <ul>
-                {props.episode.map((url) => {
+                {characters.episode.map((url) => {
                     return (<li key={url}><a href={url}>{url}</a></li>)
                 })}
                 </ul>
@@ -33,8 +33,8 @@ export default function CharacterDetail(props:Result, {error}:Errors) {
 
             {/* backside of the card */}
             <CardBack
-                location_name={props.location.name}
-                location_url={props.location.url}  
+                location_name={characters.location.name}
+                location_url={characters.location.url}  
             />
         </div>
     )
@@ -46,22 +46,26 @@ export default function CharacterDetail(props:Result, {error}:Errors) {
 
 export const getServerSideProps: GetServerSideProps =  async(context) => {
 
-
     const url = 'https://rickandmortyapi.com/api/character/'
     const response = await fetch(url + context.query.id)
     if (response.status === 404) {
         // console.log('error')
         return {
-          props: {
-            error: {
-              statusCode: response.status,
-              message: response.statusText 
+            props: {
+              error: {
+                statusCode: response.status,
+                message: response.statusText 
+            }
           }
+      }
+    }
+    const data:Character = await response.json()
+    // console.log(data)
+    return {
+        props: {
+            characters: data
         }
     }
-    }
-    const data = await response.json()
-    return {
-        props: data
-    }
 }
+
+export default CharacterDetail;
