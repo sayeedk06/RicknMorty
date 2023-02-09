@@ -93,7 +93,7 @@ const Home:NextPage<{characters:Result[], infos:Info, error:ErrorTypes}  > = ({c
 
       <main className={styles.main}>
         
-        <input className={styles.searchBox} type="text" id='characterName' autoFocus enterKeyHint='enter' onChange={putQuery} onKeyDown={searchQuery} placeholder='Search for characters here..........'/>
+        <input className={styles.searchBox} type="text" id='characterName' autoFocus enterKeyHint='done' onChange={putQuery} onKeyDown={searchQuery} placeholder='Search for characters here..........'/>
         <Filter statusHandler={statusHandler} genderHandler={genderHandler} resetHandler={resetHandler}/>
 
         {/* rendering card components start here */}
